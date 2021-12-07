@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:airport="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Search results</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+<body >
+<div class="container">
+    <p1 style="color: Blue; font-size: 24px; text-shadow: -2px 2px 2px #999; font-family: 'Satisfy', cursive;  ">WELCOME TO OUR TRAVEL AGENCY HOME PAGE</p1>
+    <hr/>
+    <table class="table">
+        <tr><td style="padding:10px">
+            <form method="GET" th:action="@{/tours/search}" th:object="${tourForm}">
+                <label style="color: blue;font-weight: 500;">Please choose the continent: </label>
+                <select name="continent" id="continent" >
+                    <option value=""; >--All--</option >
+                    <option th:each="c: ${continent}"
+                            th:text="${c.value}"
+                            th:value="${c.key}"
+                            th:selected="(${c.key} == ${selectedContinent})"
+                    >
+                    </option>
+                </select>
+                <br>
+                <br>
+
+
+                <label style="color: blue;font-weight: 500;">Please choose the country: </label>
+                <select name = "country" id ="country">
+                    <option value="">--All--</option>
+                    <option th:each="country: ${country}"
+                            th:text="${country.value}"
+                            th:value="${country.key}"
+                            th:selected="(${country.key} == ${selectedCountry})">
+                    </option>
+                </select>
+                <br>
+                <br>
+
+                <label style="color: blue;font-weight: 500;">Please choose the hotel: </label>
+                <select name = "hotel" id ="hotel">
+                    <option value="">--All--</option>
+                    <option th:each="hotel: ${hotel}"
+                            th:text="${hotel.value}"
+                            th:value="${hotel.key}">
+                    </option>
+                </select>
+                <br>
+                <br>
+
+                <label style="color: blue;font-weight: 500;">Please choose the airport of departure: </label>
+                <select name = "whereFrom">
+                    <option value="">--All--</option>
+                    <option th:each="airport: ${airportDepart}" th:text="${airport.value}" th:value="${airport.key}">
+                    </option>
+                </select>
+                <br>
+                <br>
+
+                <label style ="color: blue;font-weight: 500;">Please choose the final destination: </label>
+                <select name = "whereTo">
+                    <option value="">--All--</option>
+                    <option th:each="airport: ${airportDest}" th:text="${airport.value}" th:value="${airport.key}">
+                    </option>
+                </select>
+                <br>
+                <br>
+
+                <label style="color: blue;font-weight: 500;">Departure date:</label>
+                <input name="departureDate" type="date" > <br>
+                <br>
+
+                <label style="color: blue;font-weight: 500;">Date of return:</label>
+                <input name="dateOfReturn" type="date" > <br>
+                <br>
+
+                <label style="color: blue;font-weight: 500;">Type of catering: </label>
+                <select name="type">
+                    <option value="">--All--</option>
+                    <option value="BB">BB</option>
+                    <option value="HB">HB</option><br/>
+                    <option value="FB">FB</option><br/>
+                    <option value="AI">AI</option><br/>
+                </select>
+                <br>
+                <br>
+
+
+                <label style="color: blue;font-weight: 500;">Hotel category: </label>
+                <select name="hotelCategory">
+                    <option value="">--All--</option>
+                    <option value="5">5</option>
+                    <option value="4">4</option><br/>
+                    <option value="3">3</option><br/>
+                </select>
+                <br>
+                <br>
+
+                <label style="color: blue;font-weight: 500;" for="quantity">Please choose number of days:</label>
+                <input type="number" id="quantity" name="numberOfDays" min="1" max="30">
+                <br>
+                <br>
+                <button TYPE="submit" style="width:100%" class="btn btn-outline-primary">Search</button> <br>
+                <br>
+            </form>
+        </td>
+            <td style="text-align:right">
+                <img src="https://www.candorblog.com/wp-content/uploads/2017/05/travel-022-696x392.jpg" class="img-thumbnail" alt="https://www.candorblog.com/wp-content/uploads/2017/05/travel-022-696x392.jpg" />
+            </td></tr>
+    </table>
+    <label style="color: blue;font-weight: 500; "for="quantity">Promoted tours:</label>
+    <br>
+    <br>
+
+    <table class="table">
+        <tr>
+            <th>id</th>
+            <th>Where from</th>
+            <th>Where to</th>
+            <th>Departure date</th>
+            <th>Date of return</th>
+            <th>Number of days</th>
+            <th>Type of catering</th>
+            <th>Price adult</th>
+            <th>Price child</th>
+            <th>Number of adults seats</th>
+            <th>Number of places for children</th>
+            <th>Buy a tour</th>
+        </tr>
+
+
+        </thead>
+        <tbody>
+
+        <tr th:each=" list : ${listPromoted}">
+            <td><span th:text="${list.id}"> id </span></td>
+            <td><span th:text="${list.depAirport}"> Where From </span></td>
+            <td><span th:text="${list.destAirport}"> Where to </span></td>
+            <td><span th:text="${list.departureDate}"> Departure date </span></td>
+            <td><span th:text="${list.dateOfReturn}"> Date of return </span></td>
+            <td><span th:text="${list.numberOfDays}"> Number of days </span></td>
+            <td><span th:text="${list.type}"> type </span></td>
+            <td><span th:text="${list.priceAdult}"> priceAdult </span></td>
+            <td><span th:text="${list.priceChild}"> priceChild </span></td>
+            <td><span th:text="${list.numberOfAdultsSeats}"> number of Adult seats </span></td>
+            <td><span th:text="${list.numberofPlacesForChildren}"> number of places for children </span></td>
+            <td>
+      <span th:switch="${list.numberOfAdultsSeats eq 0 and list.numberofPlacesForChildren eq 0}">
+        <span th:case="true">Sold out</span>
+        <a th:case="false" th:href="${'/tours/buy?id=' + {list.id}}">Buy</a>
+      </span>
+            </td>
+
+        </tr>
+
+
+        </tbody>
+    </table>
+    <br>
+    <br>
+
+    <label style="color: blue;font-weight: 500;"for="quantity">Upcoming tours:</label>
+    <br>
+    <br>
+
+    <table class="table">
+        <tr>
+            <th>id</th>
+            <th>Where from</th>
+            <th>Where to</th>
+            <th>Departure date</th>
+            <th>Date of return</th>
+            <th>Number of days</th>
+            <th>Type of catering</th>
+            <th>Price adult</th>
+            <th>Price child</th>
+            <th>Number of adults seats</th>
+            <th>Number of places for children</th>
+            <th>Buy a tour</th>
+        </tr>
+
+
+        </thead>
+        <tbody>
+
+
+
+        <tr th:each=" list : ${listUpcomingTours}">
+            <td><span th:text="${list.id}"> id </span></td>
+            <td><span th:text="${list.depAirport}"> Where From </span></td>
+            <td><span th:text="${list.destAirport}"> Where to </span></td>
+            <td><span th:text="${list.departureDate}"> Departure date </span></td>
+            <td><span th:text="${list.dateOfReturn}"> Date of return </span></td>
+            <td><span th:text="${list.numberOfDays}"> Number of days </span></td>
+            <td><span th:text="${list.type}"> type </span></td>
+            <td><span th:text="${list.priceAdult}"> priceAdult </span></td>
+            <td><span th:text="${list.priceChild}"> priceChild </span></td>
+            <td><span th:text="${list.numberOfAdultsSeats}"> number of Adult seats </span></td>
+            <td><span th:text="${list.numberofPlacesForChildren}"> number of places for children </span></td>
+            <td>
+      <span th:switch="${list.numberOfAdultsSeats eq 0 and list.numberofPlacesForChildren eq 0}">
+        <span th:case="true">Sold out</span>
+        <a th:case="false" th:href="${'/tours/buy?id=' + {list.id}}">Buy</a>
+      </span>
+            </td>
+
+        </tr>
+
+
+        </tbody>
+    </table>
+
+    <br>
+    <br>
+
+    <label style="color: blue;font-weight: 500;"for="quantity">Upcoming tours to Australia:</label>
+    <br>
+    <br>
+    <table class="table">
+        <tr>
+            <th>id</th>
+            <th>Where from</th>
+            <th>Where to</th>
+            <th>Departure date</th>
+            <th>Date of return</th>
+            <th>Number of days</th>
+            <th>Type of catering</th>
+            <th>Price adult</th>
+            <th>Price child</th>
+            <th>Number of adults seats</th>
+            <th>Number of places for children</th>
+            <th>Buy a tour</th>
+        </tr>
+
+
+        </thead>
+        <tbody>
+
+
+
+        <tr th:each=" list : ${listUpcomingToursAustralia}">
+            <td><span th:text="${list.id}"> id </span></td>
+            <td><span th:text="${list.depAirport}"> Where From </span></td>
+            <td><span th:text="${list.destAirport}"> Where to </span></td>
+            <td><span th:text="${list.departureDate}"> Departure date </span></td>
+            <td><span th:text="${list.dateOfReturn}"> Date of return </span></td>
+            <td><span th:text="${list.numberOfDays}"> Number of days </span></td>
+            <td><span th:text="${list.type}"> type </span></td>
+            <td><span th:text="${list.priceAdult}"> priceAdult </span></td>
+            <td><span th:text="${list.priceChild}"> priceChild </span></td>
+            <td><span th:text="${list.numberOfAdultsSeats}"> number of Adult seats </span></td>
+            <td><span th:text="${list.numberofPlacesForChildren}"> number of places for children </span></td>
+            <td>
+      <span th:switch="${list.numberOfAdultsSeats eq 0 and list.numberofPlacesForChildren eq 0}">
+        <span th:case="true">Sold out</span>
+        <a th:case="false" th:href="${'/tours/buy?id=' + {list.id}}">Buy</a>
+      </span>
+            </td>
+
+        </tr>
+
+
+        </tbody>
+    </table>
+
+    <br>
+    <br>
+
+    <label style="color: blue;font-weight: 500;"for="quantity">Upcoming tours to North America:</label>
+    <br>
+    <br>
+    <table class="table">
+        <tr>
+            <th>id</th>
+            <th>Where from</th>
+            <th>Where to</th>
+            <th>Departure date</th>
+            <th>Date of return</th>
+            <th>Number of days</th>
+            <th>Type of catering</th>
+            <th>Price adult</th>
+            <th>Price child</th>
+            <th>Number of adults seats</th>
+            <th>Number of places for children</th>
+            <th>Buy a tour</th>
+        </tr>
+
+
+        </thead>
+        <tbody>
+
+
+
+        <tr th:each=" list : ${listUpcomingToursNorthAmerica}">
+            <td><span th:text="${list.id}"> id </span></td>
+            <td><span th:text="${list.depAirport}"> Where From </span></td>
+            <td><span th:text="${list.destAirport}"> Where to </span></td>
+            <td><span th:text="${list.departureDate}"> Departure date </span></td>
+            <td><span th:text="${list.dateOfReturn}"> Date of return </span></td>
+            <td><span th:text="${list.numberOfDays}"> Number of days </span></td>
+            <td><span th:text="${list.type}"> type </span></td>
+            <td><span th:text="${list.priceAdult}"> priceAdult </span></td>
+            <td><span th:text="${list.priceChild}"> priceChild </span></td>
+            <td><span th:text="${list.numberOfAdultsSeats}"> number of Adult seats </span></td>
+            <td><span th:text="${list.numberofPlacesForChildren}"> number of places for children </span></td>
+            <td>
+      <span th:switch="${list.numberOfAdultsSeats eq 0 and list.numberofPlacesForChildren eq 0}">
+        <span th:case="true">Sold out</span>
+        <a th:case="false" th:href="${'/tours/buy?id=' + {list.id}}">Buy</a>
+      </span>
+            </td>
+
+        </tr>
+
+
+        </tbody>
+    </table>
+
+    <br>
+    <br>
+
+    <label style="color: blue;font-weight: 500;"for="quantity">Upcoming tours to South America:</label>
+    <br>
+    <br>
+    <table class="table">
+        <tr>
+            <th>id</th>
+            <th>Where from</th>
+            <th>Where to</th>
+            <th>Departure date</th>
+            <th>Date of return</th>
+            <th>Number of days</th>
+            <th>Type of catering</th>
+            <th>Price adult</th>
+            <th>Price child</th>
+            <th>Number of adults seats</th>
+            <th>Number of places for children</th>
+            <th>Buy a tour</th>
+        </tr>
+
+
+        </thead>
+        <tbody>
+
+
+
+        <tr th:each=" list : ${listUpcomingToursSouthAmerica}">
+            <td><span th:text="${list.id}"> id </span></td>
+            <td><span th:text="${list.depAirport}"> Where From </span></td>
+            <td><span th:text="${list.destAirport}"> Where to </span></td>
+            <td><span th:text="${list.departureDate}"> Departure date </span></td>
+            <td><span th:text="${list.dateOfReturn}"> Date of return </span></td>
+            <td><span th:text="${list.numberOfDays}"> Number of days </span></td>
+            <td><span th:text="${list.type}"> type </span></td>
+            <td><span th:text="${list.priceAdult}"> priceAdult </span></td>
+            <td><span th:text="${list.priceChild}"> priceChild </span></td>
+            <td><span th:text="${list.numberOfAdultsSeats}"> number of Adult seats </span></td>
+            <td><span th:text="${list.numberofPlacesForChildren}"> number of places for children </span></td>
+            <td>
+      <span th:switch="${list.numberOfAdultsSeats eq 0 and list.numberofPlacesForChildren eq 0}">
+        <span th:case="true">Sold out</span>
+        <a th:case="false" th:href="${'/tours/buy?id=' + {list.id}}">Buy</a>
+      </span>
+            </td>
+
+        </tr>
+
+
+        </tbody>
+    </table>
+
+    <br>
+    <br>
+
+    <label style="color: blue;font-weight: 500;" for="quantity">Upcoming tours to Africa:</label>
+    <br>
+    <br>
+    <table class="table">
+        <tr>
+            <th>id</th>
+            <th>Where from</th>
+            <th>Where to</th>
+            <th>Departure date</th>
+            <th>Date of return</th>
+            <th>Number of days</th>
+            <th>Type of catering</th>
+            <th>Price adult</th>
+            <th>Price child</th>
+            <th>Number of adults seats</th>
+            <th>Number of places for children</th>
+            <th>Buy a tour</th>
+        </tr>
+
+
+        </thead>
+        <tbody>
+
+
+
+        <tr th:each=" list : ${listUpcomingTourAfrica}">
+            <td><span th:text="${list.id}"> id </span></td>
+            <td><span th:text="${list.depAirport}"> Where From </span></td>
+            <td><span th:text="${list.destAirport}"> Where to </span></td>
+            <td><span th:text="${list.departureDate}"> Departure date </span></td>
+            <td><span th:text="${list.dateOfReturn}"> Date of return </span></td>
+            <td><span th:text="${list.numberOfDays}"> Number of days </span></td>
+            <td><span th:text="${list.type}"> type </span></td>
+            <td><span th:text="${list.priceAdult}"> priceAdult </span></td>
+            <td><span th:text="${list.priceChild}"> priceChild </span></td>
+            <td><span th:text="${list.numberOfAdultsSeats}"> number of Adult seats </span></td>
+            <td><span th:text="${list.numberofPlacesForChildren}"> number of places for children </span></td>
+            <td>
+      <span th:switch="${list.numberOfAdultsSeats eq 0 and list.numberofPlacesForChildren eq 0}">
+        <span th:case="true">Sold out</span>
+        <a th:case="false" th:href="${'/tours/buy?id=' + {list.id}}">Buy</a>
+      </span>
+            </td>
+
+        </tr>
+
+
+        </tbody>
+    </table>
+
+    <br>
+    <br>
+
+    <label style="color: blue;font-weight: 500;"for="quantity">Upcoming tours to Europe:</label>
+    <br>
+    <br>
+    <table class="table">
+        <tr>
+            <th>id</th>
+            <th>Where from</th>
+            <th>Where to</th>
+            <th>Departure date</th>
+            <th>Date of return</th>
+            <th>Number of days</th>
+            <th>Type of catering</th>
+            <th>Price adult</th>
+            <th>Price child</th>
+            <th>Number of adults seats</th>
+            <th>Number of places for children</th>
+            <th>Buy a tour</th>
+        </tr>
+
+
+        </thead>
+        <tbody>
+
+
+
+        <tr th:each=" list : ${listUpcomingToursEurope}">
+            <td><span th:text="${list.id}"> id </span></td>
+            <td><span th:text="${list.depAirport}"> Where From </span></td>
+            <td><span th:text="${list.destAirport}"> Where to </span></td>
+            <td><span th:text="${list.departureDate}"> Departure date </span></td>
+            <td><span th:text="${list.dateOfReturn}"> Date of return </span></td>
+            <td><span th:text="${list.numberOfDays}"> Number of days </span></td>
+            <td><span th:text="${list.type}"> type </span></td>
+            <td><span th:text="${list.priceAdult}"> priceAdult </span></td>
+            <td><span th:text="${list.priceChild}"> priceChild </span></td>
+            <td><span th:text="${list.numberOfAdultsSeats}"> number of Adult seats </span></td>
+            <td><span th:text="${list.numberofPlacesForChildren}"> number of places for children </span></td>
+            <td>
+      <span th:switch="${list.numberOfAdultsSeats eq 0 and list.numberofPlacesForChildren eq 0}">
+        <span th:case="true">Sold out</span>
+        <a th:case="false" th:href="${'/tours/buy?id=' + {list.id}}">Buy</a>
+      </span>
+            </td>
+
+        </tr>
+
+
+        </tbody>
+    </table>
+
+    <br>
+    <br>
+
+    <label style="color: blue;font-weight: 500;" for="quantity">Upcoming tours to Asia:</label>
+    <br>
+    <br>
+    <table class="table">
+        <tr>
+            <th>id</th>
+            <th>Where from</th>
+            <th>Where to</th>
+            <th>Departure date</th>
+            <th>Date of return</th>
+            <th>Number of days</th>
+            <th>Type of catering</th>
+            <th>Price adult</th>
+            <th>Price child</th>
+            <th>Number of adults seats</th>
+            <th>Number of places for children</th>
+            <th>Buy a tour</th>
+        </tr>
+
+
+        </thead>
+        <tbody>
+
+
+
+        <tr th:each=" list : ${listUpcomingToursAsia}">
+            <td><span th:text="${list.id}"> id </span></td>
+            <td><span th:text="${list.depAirport}"> Where From </span></td>
+            <td><span th:text="${list.destAirport}"> Where to </span></td>
+            <td><span th:text="${list.departureDate}"> Departure date </span></td>
+            <td><span th:text="${list.dateOfReturn}"> Date of return </span></td>
+            <td><span th:text="${list.numberOfDays}"> Number of days </span></td>
+            <td><span th:text="${list.type}"> type </span></td>
+            <td><span th:text="${list.priceAdult}"> priceAdult </span></td>
+            <td><span th:text="${list.priceChild}"> priceChild </span></td>
+            <td><span th:text="${list.numberOfAdultsSeats}"> number of Adult seats </span></td>
+            <td><span th:text="${list.numberofPlacesForChildren}"> number of places for children </span></td>
+            <td>
+      <span th:switch="${list.numberOfAdultsSeats eq 0 and list.numberofPlacesForChildren eq 0}">
+        <span th:case="true">Sold out</span>
+        <a th:case="false" th:href="${'/tours/buy?id=' + {list.id}}">Buy</a>
+      </span>
+            </td>
+
+        </tr>
+
+
+        </tbody>
+    </table>
+    <br>
+    <br>
+
+    <label style="color: blue;font-weight: 500;"for="quantity">Upcoming trips by country:</label>
+    <br>
+    <br>
+    <label>Please choose the country: </label>
+    <select name = "country" id ="country2" onchange="filterList()">
+        <option value="">--All--</option>
+        <option th:each="country: ${country}"
+                th:text="${country.value}"
+                th:value="${country.key}"
+                th:selected="(${country.key} == ${selectedCountry})">
+        </option>
+    </select>
+    <br>
+    <br>
+    <table id ="myTable"  class="table">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>Country</th>
+            <th>Where from</th>
+            <th>Where to</th>
+            <th>Departure date</th>
+            <th>Date of return</th>
+            <th>Number of days</th>
+            <th>Type of catering</th>
+            <th>Price adult</th>
+            <th>Price child</th>
+            <th>Number of adults seats</th>
+            <th>Number of places for children</th>
+            <th>Buy a tour</th>
+        </tr>
+        </thead>
+        <tbody>
+
+
+
+        <tr th:each=" list : ${listUpcomingTripsByCountry}">
+            <td><span th:text="${list.id}"> id </span></td>
+            <td><span th:text="${list.country_name}"> name </span></td>
+            <td><span th:text="${list.depAirport}"> Where From </span></td>
+            <td><span th:text="${list.destAirport}"> Where to </span></td>
+            <td><span th:text="${list.departureDate}"> Departure date </span></td>
+            <td><span th:text="${list.dateOfReturn}"> Date of return </span></td>
+            <td><span th:text="${list.numberOfDays}"> Number of days </span></td>
+            <td><span th:text="${list.type}"> type </span></td>
+            <td><span th:text="${list.priceAdult}"> priceAdult </span></td>
+            <td><span th:text="${list.priceChild}"> priceChild </span></td>
+            <td><span th:text="${list.numberOfAdultsSeats}"> number of Adult seats </span></td>
+            <td><span th:text="${list.numberofPlacesForChildren}"> number of places for children </span></td>
+            <td>
+      <span th:switch="${list.numberOfAdultsSeats eq 0 and list.numberofPlacesForChildren eq 0}">
+        <span th:case="true">Sold out</span>
+        <a th:case="false" th:href="${'/tours/buy?id=' + {list.id}}">Buy</a>
+      </span>
+            </td>
+
+        </tr>
+
+
+        </tbody>
+    </table>
+
+    <label style="color: blue;font-weight: 500;"for="quantity" id="lastPurchasedOrders">Recently Purchased Tours:</label>
+    <hr/>
+    <table id ="myTable"  class="table">
+        <thead>
+        <tr>
+            <th>Purchase Time</th>
+            <th>Number of tickets</th>
+            <th>Amount</th>
+            <th>Tour</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each=" list : ${lastPurchasedOrders}">
+            <td><span th:text="${list.purchaseTime}"> </span></td>
+            <td><span th:text="${list.dataOfParticipants}"> </span></td>
+            <td><span th:text="${list.amount}"></span></td>
+            <td><span th:text="${list.tourname}"></span></td>
+        </tr>
+
+
+        </tbody>
+    </table>
+
+
+
+</div>
+<script src="/tour_search.js"></script>
+</body>
+</html>

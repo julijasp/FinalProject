@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
+
+    <meta charset="UTF-8">
+    <title>Search results</title>
+
+
+</head>
+<body>
+<a href="/tours/admin">Add/Edit Flight tour</a>  | <a href="/tours/admin/list">Flight list</a> [ <a href="/tours/main">Search</a> ]
+<hr/>
+<div style="position: relative;height: 150px; background: url(https://thumbs.dreamstime.com/b/long-banner-topic-traveling-around-world-landmarks-background-modern-city-opera-house-pisa-65929806.jpg); background-repeat: repeat; background-size: auto 150px; "><div style="border: 1px solid black;position: absolute;bottom:0px;left:20px;width:300px;background-color:white;text-align:center;font-family:verdana; font-size:200%;"> Search results:</div></div>
+<table>
+    <tr>
+        <th>id</th>
+        <th>Where from</th>
+        <th>Where to</th>
+        <th>Departure date</th>
+        <th>Date of return</th>
+        <th>Number of days</th>
+        <th>Type of catering</th>
+        <th>Price adult</th>
+        <th>Price child</th>
+        <th>Promoted</th>
+        <th>Number of adults seats</th>
+        <th>Number of places for children</th>
+        <th>Buy a tour</th>
+    </tr>
+
+
+    </thead>
+    <tbody>
+
+    <tr th:each=" list : ${list}">
+        <td><span th:text="${list.id}"> id </span></td>
+        <td><span th:text="${list.depAirport}"> Where From </span></td>
+        <td><span th:text="${list.destAirport}"> Where to </span></td>
+        <td><span th:text="${list.departureDate}"> Departure date </span></td>
+        <td><span th:text="${list.dateOfReturn}"> Date of return </span></td>
+        <td><span th:text="${list.numberOfDays}"> Number of days </span></td>
+        <td><span th:text="${list.type}"> type </span></td>
+        <td><span th:text="${list.priceAdult}"> priceAdult </span></td>
+        <td><span th:text="${list.priceChild}"> priceChild </span></td>
+        <td><span th:text="${list.promoted}"> promoted </span></td>
+        <td><span th:text="${list.numberOfAdultsSeats}"> number of Adult seats </span></td>
+        <td><span th:text="${list.numberofPlacesForChildren}"> number of places for children </span></td>
+        <td>
+      <span th:switch="${list.numberOfAdultsSeats eq 0 and list.numberofPlacesForChildren eq 0}">
+        <span th:case="true">Sold out</span>
+        <a th:case="false" th:href="${'/tours/buy?id=' + {list.id}}">Buy</a>
+      </span>
+        </td>
+    </tr>
+
+
+    </tbody>
+</table>
+
+</div>
+
+</body>
+</html>

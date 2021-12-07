@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Tool</title>
+</head>
+<body>
+[ <a href="/tours/admin">Add/Edit Flight tour</a> ] <a href="/tours/admin/list">Flight list</a> | <a href="/tours/main">Search</a>
+<hr/>
+<div style="position: relative;height: 150px; background: url(https://thumbs.dreamstime.com/b/long-banner-topic-traveling-around-world-landmarks-background-modern-city-opera-house-pisa-65929806.jpg); background-repeat: repeat; background-size: auto 150px; "><div style="border: 1px solid black;position: absolute;bottom:0px;left:20px;width:300px;background-color:white;text-align:center;font-family:verdana; font-size:200%;"> Admin:</div></div>
+<form id="myTravelForm" method="post" th:action="@{/tours/admin}" th:object="${tourForm}">
+
+    <input th:if= "*{id != null}" type="hidden" th:field="*{id}" id="id">
+
+    <label>Departure - Airport: </label>
+    <select name="whereFrom">
+        <option value="">--All--</option>
+        <option th:each="airport: ${airport}" th:text="${airport.value}" th:value="${airport.key}" th:selected="${airport.key} eq *{whereFrom}">
+        </option>
+    </select>
+    <br>
+    <br>
+
+    <label>Arrival - Airport: </label>
+    <select name="whereTo">
+        <option value="">--All--</option>
+        <option th:each="airport: ${airport}" th:text="${airport.value}" th:value="${airport.key}" th:selected="${airport.key} eq *{whereTo}">
+        </option>
+    </select>
+    <br>
+    <br>
+
+    <label>The date of departure</label>
+    <input type="date" th:field="*{departureDate}"/><br/>
+    <label>The date of return</label>
+    <input type="date" th:field="*{dateOfReturn}"/><br/>
+    <label>The length of the trip </label>
+    <input type="number" th:field="*{numberOfDays}"/><br/>
+    <label>Type of the stay</label>
+    <input type="text" th:field="*{type}"/><br/>
+    <label>The price for an adult</label>
+    <input type="number" th:field="*{priceAdult}" /><br/>
+    <label>The price for a child</label>
+    <input type="number" th:field="*{priceChild}"/><br/>
+    <label>A promoted trip?</label>
+    <input type="checkbox" checked="" th:field="*{promoted}"><br/>
+    <label>The number of adult seats</label>
+    <input type="number" th:field="*{numberOfAdultsSeats}"/><br/>
+    <label>The number of child seats</label>
+    <input type="number" th:field="*{numberOfPlacesForChildren}"/><br/>
+
+    <input type="submit" value= "Submit" id = "submit-button"/>
+</form>
+
+<ul th:if="(${ok} == 1)">
+    Successfully added!
+</ul>
+</body>
+</html>
